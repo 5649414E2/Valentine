@@ -8,25 +8,21 @@
 body {
   margin:0;
   font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #ff7eb3, #2b0b3f);
+  background: black;
   color:white;
   overflow-x:hidden;
 }
 
-/* Floating sparkles */
-.sparkle {
-  position: fixed;
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-  opacity:0.8;
-  animation: float 10s linear infinite;
+/* STARFIELD BACKGROUND */
+
+canvas {
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
 }
 
-@keyframes float {
-  to { transform: translateY(-120vh); opacity:0; }
-}
+/* SECTIONS */
 
 section {
   min-height:100vh;
@@ -37,47 +33,60 @@ section {
   padding:40px;
 }
 
+/* LUXURY GLASS CARD */
+
 .card {
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(14px);
-  padding:40px;
-  border-radius:25px;
-  max-width:600px;
-  box-shadow:0 15px 50px rgba(0,0,0,0.4);
-  animation: fadeInUp 1.5s ease;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  border-radius:30px;
+  padding:50px;
+  max-width:700px;
+  box-shadow:0 20px 80px rgba(255,0,120,0.3);
+  animation: fadeUp 1.6s ease;
 }
 
-h1 { font-size:50px; }
-p { font-size:22px; line-height:1.6; }
+h1 {
+  font-size:60px;
+  letter-spacing:2px;
+}
+
+p {
+  font-size:24px;
+  line-height:1.7;
+}
 
 button {
-  background:white;
-  color:#ff4d6d;
+  margin-top:25px;
+  padding:18px 40px;
   border:none;
-  padding:16px 28px;
   border-radius:40px;
   font-size:20px;
+  background: linear-gradient(45deg,#ff4d6d,#ff9a9e);
+  color:white;
   cursor:pointer;
-  margin-top:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+  box-shadow:0 10px 30px rgba(255,0,100,0.5);
 }
 
-button:hover { transform: scale(1.05); }
-
-.hidden {
-  display:none;
-  margin-top:25px;
+button:hover {
+  transform: scale(1.07);
 }
 
-@keyframes fadeInUp {
-  from { opacity:0; transform: translateY(50px); }
-  to { opacity:1; transform: translateY(0); }
-}
+.hidden { display:none; }
+
+/* POEM STYLING */
 
 .poem {
   font-style:italic;
-  font-size:24px;
+  font-size:26px;
   white-space:pre-line;
+  line-height:1.9;
+}
+
+/* FADE ANIMATION */
+
+@keyframes fadeUp {
+  from {opacity:0; transform:translateY(80px);}
+  to {opacity:1; transform:translateY(0);}
 }
 
 </style>
@@ -85,18 +94,20 @@ button:hover { transform: scale(1.05); }
 
 <body>
 
-<!-- SECTION 1 -->
+<canvas id="stars"></canvas>
+
+<!-- HERO -->
 <section>
   <div class="card">
-    <h1>You already said yes ❤️</h1>
+    <h1>You Already Said Yes ❤️</h1>
     <p>
-    So this is not a question.  
-    This is a small universe I made just for you.
+    This isn’t just a message.  
+    It’s a world I built — just for you.
     </p>
   </div>
 </section>
 
-<!-- SECTION 2 -->
+<!-- STORY -->
 <section>
   <div class="card">
     <p>
@@ -107,7 +118,6 @@ button:hover { transform: scale(1.05); }
   </div>
 </section>
 
-<!-- SECTION 3 -->
 <section>
   <div class="card">
     <p>
@@ -118,30 +128,32 @@ button:hover { transform: scale(1.05); }
   </div>
 </section>
 
-<!-- SECTION 4 -->
+<!-- LETTER REVEAL -->
 <section>
   <div class="card">
     <p>
-    I don’t know everything about the future,  
-    but I know I want you in it.
+    I don’t know everything about the future…  
+    But I know I want you in it.
     </p>
-    <button onclick="showLetter()">Open Your Letter 💌</button>
+
+    <button onclick="reveal()">Open Your Letter 💌</button>
 
     <p id="letter" class="hidden">
       Being with you feels peaceful.  
       You make ordinary moments special.  
-      And I want to keep building memories with you.
+      And I want to keep building a future with you.
     </p>
   </div>
 </section>
 
-<!-- POEM SECTION -->
+<!-- POEM FINALE -->
 <section>
   <div class="card">
-    <h2>Your Poem ❤️</h2>
+    <h1>Your Poem</h1>
     <p class="poem">
-PASTE YOUR POEM HERE
-Each line stays exactly as you write it.
+PASTE YOUR POEM HERE.
+
+Each line will stay exactly how you write it.
 Just replace this text.
     </p>
   </div>
@@ -149,21 +161,47 @@ Just replace this text.
 
 <script>
 
-/* letter reveal */
-function showLetter(){
-  document.getElementById("letter").style.display = "block";
+/* LETTER REVEAL */
+function reveal(){
+  document.getElementById("letter").style.display="block";
 }
 
-/* sparkle generator */
-setInterval(() => {
-  const sparkle = document.createElement("div");
-  sparkle.className = "sparkle";
-  sparkle.style.left = Math.random()*100+"vw";
-  sparkle.style.bottom = "-10px";
-  sparkle.style.animationDuration = (Math.random()*5+5)+"s";
-  document.body.appendChild(sparkle);
-  setTimeout(()=> sparkle.remove(),10000);
-},200);
+/* STARFIELD ANIMATION */
+
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+
+for(let i=0;i<200;i++){
+  stars.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*2,
+    speed:Math.random()*0.5+0.2
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  stars.forEach(s=>{
+    ctx.fillStyle="white";
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+    ctx.fill();
+
+    s.y+=s.speed;
+    if(s.y>canvas.height) s.y=0;
+  });
+
+  requestAnimationFrame(draw);
+}
+
+draw();
 
 </script>
 
