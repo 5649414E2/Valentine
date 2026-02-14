@@ -2,108 +2,134 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>For Her</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
+<title>For My Queen</title><style>
 body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background:linear-gradient(120deg,#0f0c29,#302b63,#24243e);
-  color:white;
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background: radial-gradient(circle at top,#0b0014,#000);
+overflow-x:hidden;
+color:white;
 }
-nav{
-  position:fixed;
-  width:100%;
-  padding:20px;
-  background:rgba(0,0,0,0.3);
-  backdrop-filter:blur(10px);
-  display:flex;
-  justify-content:center;
-  gap:40px;
-  z-index:1000;
+
+/* Floating stars */
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation: twinkle 3s infinite;
 }
-nav a{
-  color:white;
-  text-decoration:none;
-  font-weight:600;
+
+@keyframes twinkle{
+0%,100%{opacity:.2}
+50%{opacity:1}
 }
-section{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:40px;
-  text-align:center;
+
+/* Floating hearts */
+.heart{
+position:fixed;
+color:#ff4d9a;
+font-size:20px;
+animation: floatUp 10s linear infinite;
+opacity:.7;
 }
-.hero{
-  background:url('YOUR_IMAGE_HERE') center/cover;
+
+@keyframes floatUp{
+0%{transform:translateY(100vh) scale(.5);opacity:0}
+50%{opacity:1}
+100%{transform:translateY(-10vh) scale(1.5);opacity:0}
 }
+
+.container{
+text-align:center;
+padding:80px 20px;
+max-width:900px;
+margin:auto;
+}
+
 h1{
-  font-family:'Playfair Display',serif;
-  font-size:60px;
+font-size:3rem;
+letter-spacing:3px;
+background:linear-gradient(45deg,#ff6ad5,#ffc3ff);
+-webkit-background-clip:text;
+color:transparent;
 }
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
+
+.section{
+margin-top:120px;
+opacity:0;
+transform:translateY(50px);
+transition:1.5s;
 }
-.gallery img{
-  width:100%;
-  border-radius:20px;
-  transition:0.4s;
+
+.section.visible{
+opacity:1;
+transform:translateY(0);
 }
-.gallery img:hover{
-  transform:scale(1.05);
-}
-.card{
-  max-width:700px;
-  background:rgba(255,255,255,0.05);
-  padding:40px;
-  border-radius:20px;
-  backdrop-filter:blur(10px);
-}
+
 .poem{
-  white-space:pre-line;
-  font-size:18px;
-  line-height:1.8;
+background:rgba(255,255,255,0.05);
+padding:40px;
+border-radius:20px;
+line-height:1.8;
+font-size:1.2rem;
 }
-footer{
-  padding:40px;
-  text-align:center;
-  opacity:0.6;
+
+img{
+max-width:100%;
+border-radius:20px;
+margin-top:20px;
+box-shadow:0 0 30px rgba(255,0,150,.4);
 }
-</style>
-</head>
-<body><nav>
-<a href="#home">Home</a>
-<a href="#story">Our Story</a>
-<a href="#gallery">Memories</a>
-<a href="#poem">Poem</a>
-</nav><section id="home" class="hero">
-<h1>You Are My Universe</h1>
-<p>Not just someone I love — the gravity that holds my world together.</p>
-</section><section id="story">
-<div class="card">
-<h1>Our Story</h1>
-<p>Write your story here. How you met, what she means to you, what makes her special.</p>
-</div>
-</section><section id="gallery">
-<h1>Memories</h1>
-<div class="gallery">
-<img src="IMAGE1.jpg">
-<img src="IMAGE2.jpg">
-<img src="IMAGE3.jpg">
-<img src="IMAGE4.jpg">
-</div>
-</section><section id="poem">
-<div class="card">
-<h1>Your Poem</h1>
+</style></head><body><div class="container"><h1>To The Most Extraordinary Woman</h1>
+<p>You are not just loved — you are admired, celebrated, and cherished beyond words.</p><div class="section">
+<h2>Our Memories</h2>
+<p>Add your favorite pictures here.</p>
+<img src="yourphoto1.jpg" />
+</div><div class="section">
+<h2>What You Mean To Me</h2>
+<p>
+You are warmth in winter, calm in chaos, light in darkness.
+You are home.
+</p>
+</div><div class="section">
+<h2>A Poem For You</h2>
 <div class="poem">
 PASTE YOUR POEM HERE
 </div>
-</div>
-</section><footer>
-Made with love.
-</footer></body>
+</div></div><script>
+/* create stars */
+for(let i=0;i<120;i++){
+let star=document.createElement('div');
+star.className='star';
+star.style.top=Math.random()*100+'vh';
+star.style.left=Math.random()*100+'vw';
+star.style.animationDelay=Math.random()*3+'s';
+document.body.appendChild(star);
+}
+
+/* create floating hearts */
+setInterval(()=>{
+let heart=document.createElement('div');
+heart.className='heart';
+heart.innerHTML='❤';
+heart.style.left=Math.random()*100+'vw';
+heart.style.fontSize=(20+Math.random()*30)+'px';
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),10000);
+},500);
+
+/* reveal animation */
+let sections=document.querySelectorAll('.section');
+window.addEventListener('scroll',()=>{
+sections.forEach(sec=>{
+let pos=sec.getBoundingClientRect().top;
+if(pos<window.innerHeight-100){
+sec.classList.add('visible');
+}
+});
+});
+</script></body>
 </html>
