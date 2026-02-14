@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       POEM PAGE — poem.html
+
+       HOW TO EDIT YOUR POEM:
+       1. Find the section marked "✏️ YOUR POEM GOES HERE"
+       2. Each stanza is in a <div class="stanza"> block
+       3. Each line is a <span class="poem-line">...</span>
+       4. To add a new stanza, copy a <div class="stanza"> block
+       5. Edit the poem title in the <h2 class="poem-title"> tag
+       ============================================================ -->
+
+  <title>A Poem For You</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── Page Layout ─────────────────────────────────────────── */
+    .poem-page {
+      min-height: 100vh;
+      padding: 140px 1.5rem 6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Dreamy background gradient */
+    .poem-page::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(107, 33, 168, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(255, 107, 157, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Poem Outer Frame ────────────────────────────────────── */
+    .poem-frame-outer {
+      width: 100%;
+      max-width: 700px;
+      margin-top: 2.5rem;
+      position: relative;
+      padding: 3px;
+      background: linear-gradient(135deg,
+        var(--gold-dim) 0%,
+        rgba(201,168,76,0.1) 30%,
+        rgba(255,107,157,0.3) 60%,
+        var(--gold-dim) 100%);
+      box-shadow: var(--glow-gold),
+                  var(--glow-pink),
+                  0 40px 100px rgba(0,0,0,0.7);
+    }
+
+    /* ── Poem Inner Frame ────────────────────────────────────── */
+    .poem-frame-inner {
+      background: linear-gradient(160deg,
+        rgba(5, 5, 8, 0.98) 0%,
+        rgba(15, 8, 28, 0.97) 50%,
+        rgba(5, 5, 8, 0.98) 100%);
+      padding: 4rem 3.5rem;
+      position: relative;
+      text-align: center;
+    }
+
+    /* Inner decorative border */
+    .poem-frame-inner::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(201, 168, 76, 0.12);
+      pointer-events: none;
+    }
+
+    /* Inner corner roses */
+    .poem-frame-inner::after {
+      content: '✦   ✦   ✦   ✦';
+      position: absolute;
+      top: 24px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 0.5rem;
+      letter-spacing: 1rem;
+      color: var(--gold-dim);
+      pointer-events: none;
+    }
+
+    /* ── Poem Ornament Top ───────────────────────────────────── */
+    .poem-top-ornament {
+      font-size: 1.8rem;
+      color: var(--pink-glow);
+      text-shadow: var(--glow-text-pink);
+      margin-bottom: 1.8rem;
+      display: block;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: var(--glow-text-pink); opacity: 0.8; }
+      50%       { text-shadow: 0 0 20px rgba(255,107,157,1), 0 0 60px rgba(255,107,157,0.6), 0 0 100px rgba(255,107,157,0.3); opacity: 1; }
+    }
+
+    /* ── Poem Title ──────────────────────────────────────────── */
+    .poem-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 4vw, 2.2rem);
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      text-shadow: var(--glow-text-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .poem-subtitle {
+      font-family: var(--font-elegant);
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 2.5rem;
+    }
+
+    .poem-divider {
+      font-family: var(--font-display);
+      font-size: 0.5rem;
+      letter-spacing: 0.8em;
+      color: var(--gold-dim);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Stanzas ─────────────────────────────────────────────── */
+    .stanza {
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: poemFadeIn 1.5s ease forwards;
+    }
+
+    /* Staggered stanza animations */
+    .stanza:nth-child(1)  { animation-delay: 0.6s; }
+    .stanza:nth-child(2)  { animation-delay: 1.2s; }
+    .stanza:nth-child(3)  { animation-delay: 1.8s; }
+    .stanza:nth-child(4)  { animation-delay: 2.4s; }
+    .stanza:nth-child(5)  { animation-delay: 3.0s; }
+    .stanza:nth-child(6)  { animation-delay: 3.6s; }
+    .stanza:nth-child(7)  { animation-delay: 4.2s; }
+    .stanza:nth-child(8)  { animation-delay: 4.8s; }
+
+    @keyframes poemFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Poem Lines ──────────────────────────────────────────── */
+    .poem-line {
+      display: block;
+      font-family: var(--font-elegant);
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-primary);
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+    }
+
+    /* Gold highlight for special lines */
+    .poem-line.gold {
+      color: var(--gold-light);
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      text-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+    }
+
+    /* Pink highlight for emotional lines */
+    .poem-line.pink {
+      color: var(--pink-soft);
+      text-shadow: 0 0 15px rgba(255, 107, 157, 0.3);
+    }
+
+    /* Large closing line */
+    .poem-line.large {
+      font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+      font-weight: 500;
+      color: var(--gold-light);
+      text-shadow: var(--glow-text-gold);
+    }
+
+    /* ── Bottom Ornament ─────────────────────────────────────── */
+    .poem-bottom-ornament {
+      font-size: 1.2rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.3em;
+      margin-top: 2rem;
+      display: block;
+      opacity: 0;
+      animation: poemFadeIn 1.5s ease 5.2s forwards;
+    }
+
+    /* ── Author Credit ───────────────────────────────────────── */
+    .poem-author {
+      margin-top: 2rem;
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      opacity: 0;
+      animation: poemFadeIn 1.5s ease 5.5s forwards;
+    }
+
+    /* ── CTA ─────────────────────────────────────────────────── */
+    .poem-cta {
+      text-align: center;
+      margin-top: 3.5rem;
+      opacity: 0;
+      animation: poemFadeIn 1.5s ease 5.8s forwards;
+    }
+
+    /* ── Mobile ──────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .poem-frame-inner {
+        padding: 2.5rem 1.5rem;
+      }
+      .poem-frame-inner::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="star-canvas"></canvas>
+  <div class="hearts-container"></div>
+  <div class="page-transition active"></div>
+
+  <nav class="luxury-nav">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><span class="nav-heart">❤</span></li>
+      <li><a href="letter.html">Letter</a></li>
+      <li><a href="poem.html">Poem</a></li>
+      <li><a href="surprise.html">Surprise</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="poem-page">
+
+      <p class="chapter-label fade-in" style="font-family:var(--font-display);font-size:0.6rem;letter-spacing:0.45em;text-transform:uppercase;color:var(--gold-dim);text-align:center;margin-bottom:1rem;">
+        Chapter Three
+      </p>
+      <h1 class="section-title fade-in fade-in-delay-1">Words Written In Starlight</h1>
+      <div class="ornament fade-in fade-in-delay-2">
+        <span class="ornament-line"></span>
+        <span class="ornament-symbol">✍</span>
+        <span class="ornament-line"></span>
+      </div>
+
+      <!-- Poem Frame -->
+      <div class="poem-frame-outer fade-in fade-in-delay-3">
+        <div class="poem-frame-inner">
+
+          <!-- Top decoration -->
+          <span class="poem-top-ornament">♥</span>
+
+          <!-- ✏️ EDIT: Change the poem title -->
+          <h2 class="poem-title">You Are My Everything</h2>
+          <!-- ✏️ EDIT: Change or remove the subtitle -->
+          <p class="poem-subtitle">Written for the one who holds my heart</p>
+          <p class="poem-divider">✦ · · · ✦</p>
+
+          <!-- ===========================================================
+               ✏️ YOUR POEM GOES HERE
+               ===========================================================
+               HOW TO EDIT:
+               • Each <div class="stanza"> is one verse/stanza
+               • Each <span class="poem-line"> is one line
+               • Add class="gold" for a gold coloured line
+               • Add class="pink" for a pink coloured line
+               • Add class="large" for a bigger closing line
+               • To add more stanzas, copy a full <div class="stanza">
+                 block and paste it below
+               =========================================================== -->
+
+          <div class="stanza">
+            <span class="poem-line">Before you, the world was quiet and grey,</span>
+            <span class="poem-line">A painting without colour, a sky without light.</span>
+            <span class="poem-line gold">Then you walked in and everything changed —</span>
+            <span class="poem-line">The stars learned your name on that night.</span>
+          </div>
+
+          <div class="stanza">
+            <span class="poem-line">I've searched in libraries and riverbanks,</span>
+            <span class="poem-line">In music, in silence, in rain.</span>
+            <span class="poem-line gold">And nowhere I've been holds more warmth</span>
+            <span class="poem-line">Than the curve of your hand holding mine.</span>
+          </div>
+
+          <div class="stanza">
+            <span class="poem-line">You are the word that was missing</span>
+            <span class="poem-line">From every poem I tried to write.</span>
+            <span class="poem-line pink">You are the answer I wasn't expecting,</span>
+            <span class="poem-line pink">The dawn at the end of the night.</span>
+          </div>
+
+          <div class="stanza">
+            <span class="poem-line">If I had a thousand lifetimes to spend,</span>
+            <span class="poem-line">I'd spend every single one choosing you.</span>
+            <span class="poem-line gold">Not because love is simple or easy —</span>
+            <span class="poem-line">But because nothing else feels this true.</span>
+          </div>
+
+          <div class="stanza">
+            <span class="poem-line">So here, in these words I've gathered for you,</span>
+            <span class="poem-line">In the light of this Valentine's night —</span>
+            <span class="poem-line large">Know that my love is the one certain thing</span>
+            <span class="poem-line large gold">That will always, forever, burn bright.</span>
+          </div>
+
+          <!-- =========================================================
+               END OF POEM — Stop editing here
+               ========================================================= -->
+
+          <span class="poem-bottom-ornament">✦ · · · ✦</span>
+
+          <!-- ✏️ EDIT: Change the author name below -->
+          <p class="poem-author">Written for you, with everything I have</p>
+
+        </div>
+      </div>
+
+      <!-- CTA to next page -->
+      <div class="poem-cta">
+        <a href="surprise.html" class="btn-luxury btn-pulse">
+          One Last Surprise →
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

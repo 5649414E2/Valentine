@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       LOVE LETTER PAGE — letter.html
+
+       HOW TO EDIT:
+       Find the section marked "✏️ YOUR LETTER GOES HERE"
+       and replace the placeholder text with your own
+       romantic message. You can write as much as you like.
+       ============================================================ -->
+
+  <title>A Letter For You</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── Page Layout ─────────────────────────────────────────── */
+    .letter-page {
+      min-height: 100vh;
+      padding: 140px 1.5rem 6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Ambient glow */
+    .letter-page::before {
+      content: '';
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70vw;
+      height: 60vh;
+      background: radial-gradient(ellipse,
+        rgba(201, 168, 76, 0.06) 0%,
+        rgba(107, 33, 168, 0.08) 40%,
+        transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── Chapter Label ───────────────────────────────────────── */
+    .chapter-label {
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-align: center;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── Letter Container ────────────────────────────────────── */
+    .letter-container {
+      width: 100%;
+      max-width: 720px;
+      padding: 4rem 3.5rem;
+      background: linear-gradient(160deg,
+        rgba(10, 8, 18, 0.92) 0%,
+        rgba(26, 10, 46, 0.85) 50%,
+        rgba(10, 8, 18, 0.92) 100%);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      position: relative;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.7),
+                  0 0 60px rgba(201, 168, 76, 0.05),
+                  inset 0 0 60px rgba(201, 168, 76, 0.02);
+      margin-top: 2rem;
+    }
+
+    /* Gold corner accents */
+    .letter-container::before,
+    .letter-container::after {
+      content: '';
+      position: absolute;
+      width: 30px; height: 30px;
+      border-color: var(--gold-dim);
+      border-style: solid;
+    }
+
+    .letter-container::before {
+      top: -1px; left: -1px;
+      border-width: 2px 0 0 2px;
+    }
+
+    .letter-container::after {
+      bottom: -1px; right: -1px;
+      border-width: 0 2px 2px 0;
+    }
+
+    /* Inner second frame line */
+    .letter-inner-border {
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(201, 168, 76, 0.07);
+      pointer-events: none;
+    }
+
+    /* ── Wax Seal Decoration ─────────────────────────────────── */
+    .wax-seal {
+      display: block;
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+      animation: sealAppear 1.5s ease 0.5s both;
+      filter: drop-shadow(0 0 10px rgba(255, 107, 157, 0.5))
+              drop-shadow(0 0 30px rgba(255, 107, 157, 0.2));
+    }
+
+    @keyframes sealAppear {
+      from { transform: scale(0) rotate(-20deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+
+    /* ── Letter Greeting ─────────────────────────────────────── */
+    .letter-greeting {
+      font-family: var(--font-elegant);
+      font-size: 1.5rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--gold-light);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: letterFadeIn 1.2s ease 0.8s forwards;
+    }
+
+    /* ── Letter Body ─────────────────────────────────────────── */
+    .letter-body p {
+      font-family: var(--font-elegant);
+      font-size: 1.15rem;
+      line-height: 2;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: letterFadeIn 1.2s ease forwards;
+      letter-spacing: 0.01em;
+    }
+
+    /* Staggered paragraph animations */
+    .letter-body p:nth-child(1)  { animation-delay: 1.0s; }
+    .letter-body p:nth-child(2)  { animation-delay: 1.3s; }
+    .letter-body p:nth-child(3)  { animation-delay: 1.6s; }
+    .letter-body p:nth-child(4)  { animation-delay: 1.9s; }
+    .letter-body p:nth-child(5)  { animation-delay: 2.2s; }
+    .letter-body p:nth-child(6)  { animation-delay: 2.5s; }
+    .letter-body p:nth-child(7)  { animation-delay: 2.8s; }
+    .letter-body p:nth-child(8)  { animation-delay: 3.1s; }
+    .letter-body p:nth-child(9)  { animation-delay: 3.4s; }
+    .letter-body p:nth-child(10) { animation-delay: 3.7s; }
+
+    /* Gold italic highlight spans */
+    .letter-body em {
+      color: var(--gold-light);
+      font-style: italic;
+      text-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
+    }
+
+    .letter-body strong {
+      color: var(--pink-soft);
+      font-weight: 500;
+    }
+
+    @keyframes letterFadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Letter Closing ──────────────────────────────────────── */
+    .letter-closing {
+      margin-top: 3rem;
+      text-align: right;
+      opacity: 0;
+      animation: letterFadeIn 1.2s ease 4.0s forwards;
+    }
+
+    .letter-closing .closing-word {
+      font-family: var(--font-elegant);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .letter-signature {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+      text-shadow: var(--glow-text-gold);
+      display: block;
+    }
+
+    /* ── Decorative Divider ──────────────────────────────────── */
+    .letter-divider {
+      text-align: center;
+      color: var(--gold-dim);
+      font-size: 0.9rem;
+      letter-spacing: 0.5em;
+      margin: 2rem 0;
+      opacity: 0;
+      animation: letterFadeIn 1.2s ease 0.9s forwards;
+    }
+
+    /* ── Postscript ──────────────────────────────────────────── */
+    .letter-ps {
+      font-family: var(--font-elegant);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(201, 168, 76, 0.1);
+      opacity: 0;
+      animation: letterFadeIn 1.2s ease 4.3s forwards;
+    }
+
+    .letter-ps strong { color: var(--pink-soft); font-weight: 400; }
+
+    /* ── CTA ─────────────────────────────────────────────────── */
+    .letter-cta {
+      text-align: center;
+      margin-top: 4rem;
+      opacity: 0;
+      animation: letterFadeIn 1.2s ease 4.6s forwards;
+    }
+
+    /* ── Mobile ──────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .letter-container {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="star-canvas"></canvas>
+  <div class="hearts-container"></div>
+  <div class="page-transition active"></div>
+
+  <nav class="luxury-nav">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><span class="nav-heart">❤</span></li>
+      <li><a href="letter.html">Letter</a></li>
+      <li><a href="poem.html">Poem</a></li>
+      <li><a href="surprise.html">Surprise</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="letter-page">
+
+      <p class="chapter-label fade-in">Chapter Two</p>
+      <h1 class="section-title fade-in fade-in-delay-1">A Letter From My Heart</h1>
+      <div class="ornament fade-in fade-in-delay-2">
+        <span class="ornament-line"></span>
+        <span class="ornament-symbol">✉</span>
+        <span class="ornament-line"></span>
+      </div>
+
+      <!-- The Letter -->
+      <div class="letter-container">
+        <span class="letter-inner-border"></span>
+
+        <!-- Wax seal icon -->
+        <span class="wax-seal">💌</span>
+
+        <!-- ✏️ EDIT: Change the greeting (e.g. "My Dearest Sarah,") -->
+        <p class="letter-greeting">My Dearest Love,</p>
+
+        <div class="letter-divider">· · ·</div>
+
+        <!-- ===========================================================
+             ✏️ YOUR LETTER GOES HERE
+             ===========================================================
+             Replace the text inside each <p>...</p> with your own words.
+             You can add more paragraphs — just copy a <p>...</p> block.
+             Use <em>text</em> for gold italic emphasis.
+             Use <strong>text</strong> for pink emphasis.
+             =========================================================== -->
+        <div class="letter-body">
+
+          <p>
+            There are moments in life that feel like scenes from a dream — so beautiful,
+            so impossibly perfect, that you're afraid to blink in case they disappear.
+            <em>Meeting you was one of those moments.</em> And every day since has felt like
+            waking up inside that same dream, only better.
+          </p>
+
+          <p>
+            I've never been good with words. But I've always believed that when something
+            matters enough, the words find their own way. And you — you matter more than
+            <em>anything</em> I have ever known.
+          </p>
+
+          <p>
+            I love the way you laugh when something truly catches you off guard, that sound
+            that starts somewhere deep and fills the whole room. I love the way you notice
+            things other people walk past — a colour in the sky, a small detail in a song,
+            the way light falls through a window. <strong>You see the world differently,</strong>
+            and because of you, so do I.
+          </p>
+
+          <p>
+            I think about how lucky I am. Not in the small, everyday sense — but in the
+            vast, humbling sense. Out of every possible version of every possible life,
+            somehow we found each other. Somehow, <em>you are here, and you are mine,
+            and I am yours.</em>
+          </p>
+
+          <p>
+            On days when everything feels heavy, your voice is the thing that makes it
+            lighter. On days when everything is golden, you are the reason it shines.
+            You are not just the person I love — you are the feeling of home.
+          </p>
+
+          <p>
+            I don't have grand promises to make, only real ones. I promise to show up for
+            you. To notice when you're hurting even before you say it. To celebrate you
+            loudly and love you quietly. To keep choosing you — <em>every single day —
+            without hesitation.</em>
+          </p>
+
+          <p>
+            <strong>Happy Valentine's Day, my love.</strong> This day, this page, this
+            small digital world I built — it's all for you. Because you deserve to know,
+            in every way I know how to say it, that you are loved beyond measure.
+          </p>
+
+        </div>
+        <!-- =========================================================
+             END OF LETTER BODY — Stop editing here unless you want
+             to change the closing and signature.
+             ========================================================= -->
+
+        <div class="letter-closing">
+          <!-- ✏️ EDIT: Change "Forever yours" and your name below -->
+          <span class="closing-word">Forever yours,</span>
+          <span class="letter-signature">Always ♥</span>
+        </div>
+
+        <!-- ✏️ EDIT: Optional postscript at the bottom of the letter -->
+        <p class="letter-ps">
+          <strong>P.S.</strong> — Keep reading. There is more waiting for you.
+        </p>
+      </div>
+
+      <!-- CTA to next page -->
+      <div class="letter-cta">
+        <a href="poem.html" class="btn-luxury">
+          Read My Poem For You →
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

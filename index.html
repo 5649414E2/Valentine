@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       HOME PAGE — index.html
+       This is the dramatic cinematic landing page.
+       ============================================================ -->
+
+  <!-- ✏️ EDIT: Change the browser tab title below -->
+  <title>For You, My Love</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Hero Section ───────────────────────────────────────── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+    }
+
+    /* Radial ambient glow behind title */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80vw;
+      height: 80vh;
+      background: radial-gradient(ellipse at center,
+        rgba(107, 33, 168, 0.25) 0%,
+        rgba(255, 107, 157, 0.08) 40%,
+        transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: ambientPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes ambientPulse {
+      0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+      50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    /* ── Pre-Title Date ──────────────────────────────────── */
+    .hero-date {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 1.5rem;
+      animation: fadeSlideDown 1.2s ease 0.2s both;
+    }
+
+    /* ── Main Title ──────────────────────────────────────── */
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 9vw, 7rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+      color: var(--gold-light);
+      text-shadow: var(--glow-text-gold);
+      animation: fadeSlideDown 1.4s ease 0.5s both;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title-sub {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3.5vw, 2.5rem);
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: var(--pink-soft);
+      text-shadow: var(--glow-text-pink);
+      animation: fadeSlideDown 1.4s ease 0.7s both;
+    }
+
+    /* ── Ornamental Heart ────────────────────────────────── */
+    .hero-heart {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--pink-glow);
+      text-shadow: var(--glow-text-pink);
+      margin: 2rem 0;
+      display: block;
+      animation: fadeSlideDown 1.4s ease 0.9s both, heartbeat 2s ease-in-out 2s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.2); }
+      28%       { transform: scale(1); }
+      42%       { transform: scale(1.15); }
+      70%       { transform: scale(1); }
+    }
+
+    /* ── Subtitle ────────────────────────────────────────── */
+    .hero-subtitle {
+      font-family: var(--font-elegant);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-secondary);
+      max-width: 550px;
+      margin: 0 auto 3rem;
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+      animation: fadeSlideDown 1.4s ease 1.1s both;
+    }
+
+    /* ── CTA Button ──────────────────────────────────────── */
+    .hero-cta {
+      animation: fadeSlideDown 1.4s ease 1.4s both;
+      margin-bottom: 4rem;
+    }
+
+    /* ── Scroll Indicator ────────────────────────────────── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-display);
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeIn 2s ease 2.5s both;
+    }
+
+    .scroll-hint .line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ── Shared Keyframes ────────────────────────────────── */
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── Bottom Teaser Section ───────────────────────────── */
+    .teaser-section {
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .teaser-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 3rem auto 0;
+    }
+
+    .teaser-card {
+      padding: 2rem 1.5rem;
+      background: rgba(26, 10, 46, 0.4);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      text-decoration: none;
+      transition: var(--transition-medium);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .teaser-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center,
+        rgba(255, 107, 157, 0.06) 0%,
+        transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .teaser-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-5px);
+      box-shadow: var(--glow-gold);
+    }
+
+    .teaser-card:hover::before { opacity: 1; }
+
+    .teaser-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .teaser-label {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Star Background ─────────────────────────────────── -->
+  <canvas id="star-canvas"></canvas>
+
+  <!-- ── Floating Hearts ─────────────────────────────────── -->
+  <div class="hearts-container"></div>
+
+  <!-- ── Page Transition Overlay ─────────────────────────── -->
+  <div class="page-transition active"></div>
+
+  <!-- ── Navigation ──────────────────────────────────────── -->
+  <nav class="luxury-nav">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><span class="nav-heart">❤</span></li>
+      <li><a href="letter.html">Letter</a></li>
+      <li><a href="poem.html">Poem</a></li>
+      <li><a href="surprise.html">Surprise</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Main Content ────────────────────────────────────── -->
+  <div class="page-wrapper">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content" data-parallax="0.02">
+
+        <!-- ✏️ EDIT: Change the top date/occasion label below -->
+        <p class="hero-date">Valentine's Day · 2025</p>
+
+        <!-- ✏️ EDIT: Change the main title below -->
+        <h1 class="hero-title">My Love</h1>
+        <h2 class="hero-title-sub">For You & Only You</h2>
+
+        <span class="hero-heart">♥</span>
+
+        <!-- ✏️ EDIT: Change the subtitle romantic message below -->
+        <p class="hero-subtitle">
+          Every star in the sky is a reason I love you.<br>
+          Tonight, I've gathered them all — just for you.
+        </p>
+
+        <!-- ✏️ EDIT: Button text — links to memories.html -->
+        <div class="hero-cta">
+          <a href="memories.html" class="btn-luxury btn-pulse">
+            Enter My World
+          </a>
+        </div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <span class="line"></span>
+      </div>
+    </section>
+
+    <!-- TEASER CARDS -->
+    <section class="teaser-section">
+      <div class="ornament fade-in">
+        <span class="ornament-line"></span>
+        <span class="ornament-symbol">✦</span>
+        <span class="ornament-line"></span>
+      </div>
+
+      <!-- ✏️ EDIT: These teaser cards preview the other pages -->
+      <h2 class="section-title fade-in fade-in-delay-1">A Story Made For You</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">Walk through the chapters of us</p>
+
+      <div class="teaser-grid">
+        <a href="memories.html" class="teaser-card fade-in fade-in-delay-1">
+          <span class="teaser-icon">✦</span>
+          <p class="teaser-label">Our Memories</p>
+        </a>
+        <a href="letter.html" class="teaser-card fade-in fade-in-delay-2">
+          <span class="teaser-icon">✉</span>
+          <p class="teaser-label">Love Letter</p>
+        </a>
+        <a href="poem.html" class="teaser-card fade-in fade-in-delay-3">
+          <span class="teaser-icon">✍</span>
+          <p class="teaser-label">A Poem For You</p>
+        </a>
+        <a href="surprise.html" class="teaser-card fade-in fade-in-delay-4">
+          <span class="teaser-icon">♥</span>
+          <p class="teaser-label">A Surprise</p>
+        </a>
+      </div>
+    </section>
+
+  </div><!-- /page-wrapper -->
+
+  <script src="script.js"></script>
+</body>
+</html>
