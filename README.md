@@ -22,8 +22,6 @@ valentines-website/
 
 ---
 
-## ✏️ How to Customize
-
 ### 1. Add Your Photos
 1. Create a folder called `photos/` inside the project folder
 2. Copy your photo files into it (JPG, PNG, WEBP all work)
