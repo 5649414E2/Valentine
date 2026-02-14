@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For You ❤️</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #ffe6eb;
+  text-align: center;
+  padding: 30px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  margin: 20px auto;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+button {
+  background:#ff4d6d;
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:10px;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>You already said yes ❤️</h1>
+
+<div class="card">
+<p>
+The first time we talked,
+I didn’t know it would matter this much.
+But something about you stayed with me.
+</p>
+</div>
+
+<div class="card">
+<p>
+You make things feel calm.
+You make ordinary days feel brighter.
+And you make me want to become better.
+</p>
+</div>
+
+<div class="card">
+<p>
+I don’t know everything about the future,
+but I know I want you in it.
+More laughs, more memories, more quiet moments.
+</p>
+</div>
+
+<div class="card">
+<h2>💌 There’s something here only for you</h2>
+<button onclick="openLetter()">Open Letter</button>
+
+<p id="letter" style="display:none; margin-top:20px;">
+Being with you feels calm and real.
+You make ordinary moments special.
+And I want to keep building memories with you.
+</p>
+</div>
+
+<script>
+function openLetter() {
+  document.getElementById("letter").style.display = "block";
+}
+</script>
+
+</body>
+</html>
